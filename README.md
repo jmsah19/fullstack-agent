@@ -2,11 +2,12 @@
 
 # 🤖 fullstack-agent
 
-**Uma skill completa para agentes de IA fullstack — comportamento seguro, ético e escrita de qualidade em EN e PT-BR.**
+**Uma skill completa para agentes de IA fullstack — comportamento seguro, ético e escrita avançada em EN e PT-BR.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Zod](https://img.shields.io/badge/Validation-Zod-ef4444)](https://zod.dev/)
+[![Writing Skill](https://img.shields.io/badge/Writing%20Skill-v2.0.0-22c55e)](./src/skills/writing.ts)
 
 </div>
 
@@ -30,8 +31,8 @@ fullstack-agent/
 ├── README.md
 └── src/
     └── skills/
-        ├── fullstack-agent.ts          ← módulo: comportamento (behavior)
-        └── writing.ts                  ← módulo: escrita EN + PT-BR
+        ├── fullstack-agent.ts      ← módulo: comportamento (behavior)
+        └── writing.ts              ← módulo: escrita EN + PT-BR (v2.0.0)
 ```
 
 ---
@@ -46,30 +47,39 @@ Define **como o agente deve se comportar** em qualquer interação com o usuári
 
 | Categoria | Descrição |
 |---|---|
-| `goals` | Objetivos gerais: ajudar com baixo atrito, minimizar riscos, ser transparente |
-| `mustAlways` | Menor privilégio, voz ativa, confirmar antes de ações críticas, preservar contexto |
+| `goals` | Ajudar com baixo atrito, minimizar riscos, ser transparente |
+| `mustAlways` | Menor privilégio, confirmar ações críticas, preservar contexto |
 | `mustNever` | Nada ilegal, nada inventado em domínios sensíveis, sem vazamento de dados |
 | `escalation` | Quando e como escalar decisões irreversíveis para um humano |
 
 ---
 
-### ✏️ Parte 2 — Escrita (`writing`)
+### ✏️ Parte 2 — Escrita (`writing`) `v2.0.0`
 
 > `src/skills/writing.ts`
 
-Define **como o agente deve produzir e revisar textos** em dois idiomas.
+Define **como o agente deve produzir e revisar textos** em dois idiomas, com cobertura avançada de gramática, retórica, storytelling, UX writing, SEO e tradução.
 
 | Idioma | Padrão de referência |
 |---|---|
 | 🇺🇸 English | American English / British English |
 | 🇧🇷 Português Brasileiro | Acordo Ortográfico 2016 / norma culta |
 
-**O que cobre:**
-- Princípios gramaticais e estilísticos por idioma
-- Adaptação de tom e registro (formal, técnico, conversacional, criativo)
-- Erros comuns a evitar em cada idioma
-- Regras de formatação para web, docs e textos longos
-- Tradução idiomática EN ↔ PT-BR (sem tradução literal)
+**Seções cobertas:**
+
+| Seção | Descrição |
+|---|---|
+| `principles` | Gramática e estilo por idioma |
+| `toneMatrix` | Tom calibrado por contexto: corporate, marketing, legal, academic, social, email, storytelling |
+| `rhetoric` | Ethos, pathos, logos, anáfora, tricólon, antítese, concessão |
+| `storytelling` | Show don't tell, in medias res, PAS, Before/After/Bridge |
+| `uxWriting` | CTAs, error messages, microcopy, onboarding, terminologia consistente |
+| `seoWriting` | Keyword placement, meta description, E-E-A-T, featured snippets |
+| `punctuationRules` | Pontuação detalhada por idioma |
+| `commonMistakesToAvoid` | Erros frequentes em EN e PT-BR |
+| `revisionChecklist` | 12 verificações antes de entregar qualquer texto |
+| `contextStrategies` | Cold email, landing page, docs técnicos, LinkedIn, Thread X |
+| `translation` | Princípios de tradução EN ↔ PT-BR + 8 falsos cognatos documentados |
 
 ---
 
@@ -77,39 +87,30 @@ Define **como o agente deve produzir e revisar textos** em dois idiomas.
 
 ### 1. Via `skill.md` (recomendado para agentes)
 
-O agente lê o arquivo [`skill.md`](./skill.md) e carrega as definições de comportamento e escrita diretamente como instruções de sistema. Nenhuma dependência extra necessária.
+O agente lê o arquivo [`skill.md`](./skill.md) e carrega todas as definições diretamente como instruções de sistema. Nenhuma dependência extra necessária.
 
 ### 2. Via módulos TypeScript (para desenvolvedores)
 
 ```bash
-# Clone o repositorio
 git clone https://github.com/jmsah19/fullstack-agent.git
+npm install zod
 ```
 
 ```ts
 import { fullstackAgentSkill } from "./src/skills/fullstack-agent";
 import { writingSkill }        from "./src/skills/writing";
 
-// Configura comportamento geral do agente
 agent.configureBehavior(fullstackAgentSkill.behavior);
-
-// Adiciona diretrizes de escrita
 agent.addSkill(writingSkill);
-```
-
-### Dependências
-
-```bash
-npm install zod
 ```
 
 ---
 
 ## 📝 Como adicionar uma nova parte
 
-1. Crie `src/skills/minha-skill.ts` seguindo o mesmo padrão dos módulos existentes.
+1. Crie `src/skills/minha-skill.ts` seguindo o padrão dos módulos existentes.
 2. Adicione uma nova seção `## Parte N` no [`skill.md`](./skill.md) com as definições inline.
-3. Atualize o `manifesto` no topo do `skill.md` com a nova entrada em `modules`.
+3. Atualize o manifesto no topo do `skill.md` com a nova entrada em `modules`.
 
 ---
 
@@ -120,7 +121,8 @@ npm install zod
  Ética           →  transparente sobre ser IA, sem invenção de fatos sensíveis
  Transparência   →  explicar raciocínio, declarar incerteza
  UX              →  preservar contexto, linguagem proporcional ao usuário
- Escrita         →  clara, idiomática, adaptada ao público e idioma
+ Escrita         →  gramática, retórica, storytelling, UX writing e SEO em EN e PT-BR
+ Tradução        →  significado cultural, não palavras — com atenção a falsos cognatos
 ```
 
 ---
